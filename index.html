@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Lokalny Notatnik PWA</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="manifest" href="manifest.json" />
+  </head>
+  <body>
+    <div id="offlineIndicator" class="hidden">Offline Mode</div>
+
+    <nav class="nav">
+      <button data-view="dashboard" class="active">Dashboard</button>
+      <button data-view="create">Dodaj notatkę</button>
+      <button data-view="favorites">Ulubione</button>
+      <button data-view="quote">Cytat dnia</button>
+    </nav>
+
+    <main>
+      <section id="dashboard" class="view">
+        <ul id="notesList"></ul>
+      </section>
+
+      <section id="create" class="view hidden">
+        <textarea id="newNoteText" placeholder="Twoja notatka..."></textarea>
+        <button id="addNoteBtn">Dodaj notatkę</button>
+      </section>
+
+      <section id="favorites" class="view hidden">
+        <ul id="favoritesList"></ul>
+      </section>
+
+      <section id="quote" class="view hidden">
+        <button id="getQuoteBtn">Pobierz cytat</button>
+        <blockquote id="quoteText"></blockquote>
+        <cite id="quoteAuthor"></cite>
+      </section>
+    </main>
+
+    <script src="js/app.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then((reg) => console.log("SW registered", reg))
+            .catch((err) => console.error("SW registration failed", err));
+        });
+      }
+    </script>
+  </body>
+</html>
